@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Life Planner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="#main-content" class="skipLink">Skip to main content</a>
+    <header class="header" role="banner">
+        <div class="container">
+            <h1>CAMPUS LIFE PLANNER</h1>
+            <nav class="nav-bar" aria-label="navigation">
+                <button data-view="dashboard" aria-current="page">Dashboard</button>
+                <button data-view="records">My Records</button>
+                <button data-view="form">Add Activity</button>
+                <button data-view="settings">Settings</button>
+                <button data-view="about">About</button>
+            </nav>
+        </div>
+    </header>
+    <main id="main-content" class="container">
+        <div id="status-alert" aria-live="polite" class="hidden"></div>
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="view active" aria-labelledby="dashboard-heading">
+            <h2 id="dashboard-heading">Dashboard</h2>
+            <div class="status-grid" aria-label="Activity statistics">
+                <div class="stat-card">
+                    <h3>Total Activities</h3>
+                    <p class="status-value" id="stat-total">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Average Duration</h3>
+                    <p class="status-value" id="stat-avg">0 min</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Next Due</h3>
+                    <p class="status-value" id="stat-next">___</p>
+                </div>
+            </div>
+            <div class="category" aria-label="Activities by category">
+                <h3>Category Distribution</h3>
+                <div class="chart-container">
+                    <canvas id="category-pie-chart" width="300" height="300"></canvas>
+                </div>
+                <div class="cat">
+                    <span class="cat-label">Study</span>
+                    <span class="cat-value" id="study-percent">0%</span>
+                </div>
+                <div class="cat">
+                    <span class="cat-label">Event</span>
+                    <span class="cat-value" id="event-percent">0%</span>
+                </div>
+                <div class="cat">
+                    <span class="cat-label">Personal</span>
+                    <span class="cat-value" id="personal-percent">0%</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- RECORDS -->
+        <section class="view" id="records" aria-labelledby="records-heading">
+            <h2 id="records-heading">My Campus Activities</h2>
+            <div class="search-tool">
+                <label for="search-bar">Live Search:</label>
+                <input id="search-bar" type="text" placeholder="Search (e.g., 14:30)">
+                <div class="found-status" id="found-status" aria-live="polite"></div>
+            </div>
+            <div class="table-sorter">
+                <table class="sorter" aria-label="Campus activities list">
+                    <caption>Sortable activity records</caption>
+                    <thead>
+                        <tr>
+                            <th><button aria-label="Sort by Title" data-sort="title">Title</button></th>
+                            <th><button aria-label="Sort by Duration" data-sort="duration">Duration</button></th>
+                            <th><button aria-label="Sort by Due Date" data-sort="date">Due Date</button></th>
+                            <th><button aria-label="Sort by Tag" data-sort="tag">Tag</button></th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr class="placeholder-row">
+                            <td colspan="5">No activities recorded yet. Add new Activities</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- FORM -->
+        <section class="view" id="form" aria-labelledby="form-heading">
+            <h2 id="form-heading">Record New Activities</h2>
+            <form class="form" id="activity-form" novalidate>
+                <div class="form-title">
+                    <label for="title">Title:* </label>
+                    <input id="title" type="text" required placeholder="My Title" aria-required="true">
+                    <div class="error-message" id="title-error"></div>
+                </div>
+                <div class="form-duration">
+                    <label for="duration">Duration (mins):*</label>
+                    <input id="duration" type="number" min="1" required aria-required="true">
+                    <div class="error-message" id="duration-error"></div>
+                </div>
+                <div class="form-duedate">
+                    <label for="due-date">Due Date:* </label>
+                    <input id="due-date" type="date" required aria-required="true">
+                    <div class="error-message" id="date-error"></div>
+                </div>
+                <div class="form-category">
+                    <label for="tag">Category:* </label>
+                    <select id="tag" required aria-required="true">
+                        <option value="">Select category</option>
+                        <option value="Study">Study</option>
+                        <option value="Event">Event</option>
+                        <option value="Personal">Personal</option>
+                    </select>
+                    <div class="error-message" id="tag-error"></div>
+                </div>
+                <div class="for-description">
+                    <label for="description">Description:</label>
+                    <textarea id="description" rows="4" placeholder="e.g., Group study at library 14:30"></textarea>
+                    <p id="char-count">Characters: 0/75</p>
+                    <div class="error-message" id="description-error"></div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="form-save">💾 Save New Activity</button>
+                    <button type="button" id="cancel-btn" class="form-cancel">↩️ Cancel</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- SETTINGS -->
+        <section class="view" id="settings" aria-labelledby="settings-heading">
+            <h2 id="settings-heading">Data Management</h2>
+            <div class="data-download">
+                <h3>Export Data</h3>
+                <button id="download-btn" class="btn">⬇️ Download JSON</button>
+            </div>
+            <div class="data-upload">
+                <h3>Import Data</h3>
+                <input type="file" id="import-file" accept=".json">
+                <button id="upload-btn" class="btn">⬆️ Import File</button>
+                <div id="import-status" class="status-message" aria-live="polite"></div>
+            </div>
+            <div class="settings-section">
+                <h3>Appearance</h3>
+                <button id="dark-mode-toggle" class="btn">🌙 Toggle Dark Mode</button>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section class="view" id="about" aria-labelledby="about-heading">
+            <h2 id="about-heading">About This Project</h2>
+            <div class="about">
+                <p>Campus Life Planner Application for students.</p>
+                <p>Github Repo: <a href="https://github.com/mwiti-fideli/campus-planner">github.com/mwiti-fideli/campus-planner</a></p>
+                <p>Contact: <a href="mailto:f.mwiti@alustudent.com">f.mwiti@alustudent.com</a></p>
+            </div>
+        </section>
+    </main>
+    <footer role="contentinfo">
+        <div class="container">
+            <p>&copy; 2026 Campus Life Planner | Fidelis Mwiti</p>
+        </div>
+    </footer>
+    <script type="application/json" id="seed-data">
+    [
+      {"id":"seed1","title":"BSE Summative Prep","dueDate":"2026-02-25","duration":90,"tag":"Study","description":"Discuss javaScript object-oriented programming. Meet study group at 14:30 in library.","createdAt":"2026-02-19T08:00:00Z","updatedAt":"2026-02-19T08:00:00Z"},
+      {"id":"seed2","title":"Music Festivals","dueDate":"2026-03-01","duration":180,"tag":"Event","description":"Universities music and cultural fest in the multi-purpose theatre. Arrive by 09:00.","createdAt":"2026-02-19T08:00:00Z","updatedAt":"2026-02-19T08:00:00Z"}
+    ]
+    </script>
+    <script src="script.js" defer></script>
+</body>
+</html>
