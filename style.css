@@ -1,3 +1,6 @@
+/* First set the primary and secondary colors for the app,
+then the properties such as spacing and the radius for the buttons since they are recurrent
+ and also the shadow property to be used for both the text and box shadow*/
 :root {
   --primary: #2563eb;
   --primary-dark: #1d4ed8;
@@ -5,7 +8,7 @@
   --accent: #d97706;
   --danger: #dc2626;
   --light: #f8fafc;
-  --dark: #000104;
+  --dark: #000000;
   --gray: #64748b;
   --gray-light: #e2e8f0;
   --gray-bg: #f1f5f9;
@@ -19,10 +22,10 @@
   --radius-md: 8px;
   --radius-lg: 12px;
   --transition: 0.3s ease;
-  --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+  --shadow-sm: 0 1px 2px 0 #2563eb;
+  --shadow-md: 0 4px 6px 1px #2563eb;
 }
-
+/* Set the primary or recurrent properties for the app when in dark mode */
 :root[data-theme="dark"] {
   --primary: #60a5fa;
   --primary-dark: #3b82f6;
@@ -44,7 +47,7 @@
   margin: 0;
   padding: 0;
 }
-
+/*Setting up the body design*/
 body {
   font-family: 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
@@ -53,7 +56,16 @@ body {
   min-height: 100vh;
   padding-top: 4rem;
 }
+/*Designing the layout of the app logo*/
+.logo{
+   width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  transition: transform 0.3s ease;
+  animation: spin 5s linear infinite;
+}
 
+/* Setting up the properties for skip to main content*/
 .skipLink {
   position: absolute;
   top: -40px;
@@ -69,12 +81,12 @@ body {
 .skipLink:focus {
   top: 0;
 }
-
+/*Setting up the header and h1*/
 .header {
   position: sticky;
   top: 0;
   background: white;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   z-index: 900;
   padding: var(--space-sm) 0;
 }
@@ -97,7 +109,7 @@ h1 {
   margin-bottom: var(--space-sm);
   text-align: center;
 }
-
+/*Setting up the navigation bar properties in both light mode and dark mode*/
 .nav-bar {
   display: flex;
   flex-wrap: wrap;
@@ -126,7 +138,7 @@ h1 {
   background: var(--primary);
   color: white;
   border-color: var(--primary);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
 }
 :root[data-theme="dark"] .nav-bar button {
   background: var(--light);
@@ -146,7 +158,7 @@ h1 {
 .view.active {
   display: block;
 }
-
+/*Setting up the design properties of popup status message*/
 #status-alert {
   position: fixed;
   bottom: var(--space-lg);
@@ -185,6 +197,7 @@ h1 {
   display: none !important;
 }
 
+/*Setting up the properties of the dashboard and its elements*/
 .status-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -211,7 +224,7 @@ h1 {
   margin-top: var(--space-xs);
   color: var(--primary);
 }
-
+/*Setting the properties of the pie chart and the categories that are showing the percentages of activities*/
 .category {
   margin-top: var(--space-xl);
   text-align: center;
@@ -248,6 +261,8 @@ h1 {
 .search-tool {
   margin-bottom: var(--space-md);
 }
+
+/*I have added properties for the live regex search bar and the sorting or filter by table */
 #search-bar {
   width: 100%;
   padding: var(--space-sm);
@@ -267,7 +282,7 @@ h1 {
   border-color: var(--gray-light);
   color: var(--dark);
 }
-
+/*The found search items status message design including the error and in dark theme for both success and error message*/
 .found-status {
   padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-sm);
@@ -292,6 +307,7 @@ h1 {
   color: #f87171;
 }
 
+/*Designing the table and the sorter properties for sort by title, duration, Due date and tag for both light and dark mode*/
 .table-sorter {
   overflow-x: auto;
   border-radius: var(--radius-md);
@@ -361,7 +377,7 @@ h1 {
 .btn-delete:hover {
   color: var(--danger);
 }
-
+/*Form design and properties that handle both invalid input, light and dark modes, buttons(save and cancel), and the character count feature and also the error message if activity is not saved properly*/
 .form {
   max-width: 600px;
   margin: 0 auto;
@@ -452,7 +468,7 @@ textarea {
 }
 .form-cancel,
 .btn {
-  background: white;
+  background: rgb(100, 125, 138);
   border: var(--border);
 }
 .form-cancel:hover,
@@ -465,7 +481,7 @@ textarea {
   border-color: var(--gray-light);
   color: var(--dark);
 }
-
+/*Settings page design of the layout and user interface */
 .data-download,
 .data-upload,
 .settings-section {
@@ -492,7 +508,7 @@ textarea {
   border-color: var(--gray-light);
   color: var(--dark);
 }
-
+/*Formating about page in both light and dark mode*/
 .about {
   max-width: 600px;
   margin: 0 auto;
@@ -515,7 +531,7 @@ textarea {
 .about a:hover {
   text-decoration: underline;
 }
-
+/*The footer! Hurray!*/
 footer {
   background: var(--dark);
   color: white;
@@ -545,7 +561,7 @@ mark {
 }
 :root[data-theme="dark"] mark {
   background-color: rgba(251, 191, 36, 0.2);
-  color: #fbbf24;
+  color: #fffff;
 }
 
 @media (min-width: 768px) {

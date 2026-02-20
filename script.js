@@ -411,7 +411,7 @@
         const toggleBtn = document.getElementById('dark-mode-toggle');
         if (!toggleBtn) return;
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        toggleBtn.innerHTML = isDark ? '☀️' : '🌙';
+        toggleBtn.innerHTML = isDark ? 'Light Mode' : 'Dark Mode';
     }
 
     function setupKeyboardNavigation() {
